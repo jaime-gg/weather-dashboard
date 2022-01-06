@@ -4,7 +4,7 @@ Developers are often tasked with retrieving data from another application's API 
 
 Use the [OpenWeather One Call API](https://openweathermap.org/api/one-call-api) to retrieve weather data for cities. Read through the documentation for setup and usage instructions. You will use `localStorage` to store any persistent data.
 
-## User Story
+## Given: User Story
 
 ```
 AS A traveler
@@ -12,7 +12,7 @@ I WANT to see the weather outlook for multiple cities
 SO THAT I can plan a trip accordingly
 ```
 
-## Acceptance Criteria
+## Given: Acceptance Criteria
 
 ```
 GIVEN a weather dashboard with form inputs
@@ -34,11 +34,13 @@ The following image demonstrates the application functionality:
 
 ## Review
 
-You are required to submit the following for review:
+Links: 
 
 * The URL of the deployed application.
+- https://jaime-gg.github.io/weather-dashboard/ 
 
-* The URL of the GitHub repository. Give the repository a unique name and include a high-quality README describing the project.
+* The URL of the GitHub repository. 
+- https://github.com/jaime-gg/weather-dashboard 
 
 - - -
 © 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
