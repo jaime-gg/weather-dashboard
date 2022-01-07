@@ -8,12 +8,12 @@ var cityHistory  = [];
 $("form").submit(function (event) {
     event.preventDefault()
     var cityName = $("#searchCity").val().trim();
-    saveCityName();
     if (cityName) {
         returnForcast(cityName)
     } else {
         alert(`${cityName} is not a valid city`)
     }
+    saveCityName();
 })
 
 
@@ -49,19 +49,41 @@ function returnForcast(cityName) {
         var weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${APIKey}`
         var cityName = $("#searchCity").val().trim();
         fetch(weatherUrl).then(response => {
+            // if the data is successfully pullled append to the page
             if (response.ok) {
                 response.json().then(data => {
                     console.log(data)
 
+                    // data -> current date -----------------------------------------------
                     $("#currentCityName").html(cityName);
                     var date = moment().format("MM/DD/YY");
                     $("#currentdate").html(date);
-                    $("#weatherIconToday").data.current.weather.icon,
+                    // $("#weatherIconToday").data.current.weather.icon,
 
                     $("#UVIndexToday").html(data.current.uvi);
                     $("#tempToday").html(data.current.temp + " \u00B0F");
                     $("#humidityToday").html(data.current.humidity + " %");
                     $("#windToday").html(data.current.wind_speed + " MPH");
+
+                    //  data -> future dates -----------------------------------------------
+                    // loop through the ids and append necessary info
+                    for (var i = 1; i < 6; i++) {
+                        //display date
+                        var date = moment().add(i, "days").format("DD/MM/YY");
+                        $("#Date" + i).html(date);
+                        // display weather icon
+                        var weatherIncon = data.daily[i].weather[0].icon;
+                        $("#weatherIconDay" + i).attr("src", weatherIncon);
+                        // display temperature
+                        var temp = data.daily[i].temp.day;
+                        $("#tempDay" + i).html(temp);
+                        // display wind
+                        var wind = data.daily[i].temp.day;
+                        $("#windDay" + i).html(temp);
+                        // display humidity
+                        var humidity = data.daily[i].humidity;
+                        $("#humidityDay" + i).html(humidity + " %");
+                      }
                 })
             } else {
                 alert("Weather for these cooordinates is not available at the moment.")
@@ -78,7 +100,7 @@ var cityName = $("#searchCity").val().trim();
 // load from local storage -------------------------------------
 var loadCityName = function() {
     cityHistory = JSON.parse(localStorage.getItem("City"))
-    if (cityHistory == null) {
+    if (cityHistory === null) {
         cityHistory = [];
     }
 

@@ -1,8 +1,8 @@
 # 06 Server-Side APIs: Weather Dashboard
 
-Developers are often tasked with retrieving data from another application's API and using it in the context of their own. Third-party APIs allow developers to access their data and functionality by making requests with specific parameters to a URL. Your challenge is to build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS.
-
-Use the [OpenWeather One Call API](https://openweathermap.org/api/one-call-api) to retrieve weather data for cities. Read through the documentation for setup and usage instructions. You will use `localStorage` to store any persistent data.
+During this assignment I was made to retrieve a large sum of data from a third party api and then implemented that data into an application that shows the weather for a local area, both current in for the next five days.  
+The largest setback was the need for additional api's and data in order to fully implement the provided API. The use of coordinates instead of city names required me to use data given by another source, and through that was able to successfully capture the desired data. 
+I then pushed that data into the HTML code that I built using both bootstrap and the layout shown in the provided application demo. It was through these major phases that I was able to complete the assignment presented to me.
 
 ## Given: User Story
 
