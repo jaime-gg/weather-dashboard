@@ -1,7 +1,6 @@
 
 // global variables 
 var APIKey = "e7111b1f6589775ae781984a6af9beb7";
-var weatherUrl = "https://api.openweathermap.org/data/2.5/onecall?"
 
 
 // form & history slection 
@@ -27,14 +26,14 @@ function returnForcast(cityName) {
 
     // function for converting city name to coordinates
     var returnCoordinates = function() {
-        let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}`
+        var coordinateUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}`
 
-        fetch(apiUrl).then(response => {
+        fetch(coordinateUrl).then(response => {
             if (response.ok) {
                 response.json().then((data) => {
                     var coordinate = data.city;
                     // in progress // saveSearches(cityName)
-                    returnWeather(coordinate.lat, coordinate.lon)
+                    returnWeather(coordinate.coord.lat, coordinate.coord.lon)
                     console.log (coordinate);
                 })
             } else {
@@ -43,8 +42,18 @@ function returnForcast(cityName) {
         })
     }
 
-    var returnWeather = function() {
-
+    // plug in coordinates to fetch the local weather
+    var returnWeather = function(lat, lon) {
+        var weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${APIKey}`
+        fetch(weatherUrl).then(response => {
+            if (response.ok) {
+                response.json().then(data => {
+                    console.log(data)
+                })
+            } else {
+                alert("Weather for these cooordinates is not available at the moment.")
+            }
+        })
     }
     returnCoordinates();
 }
