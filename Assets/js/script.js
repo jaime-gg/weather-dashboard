@@ -1,22 +1,23 @@
 
 // global variables 
 var APIKey = "e7111b1f6589775ae781984a6af9beb7";
+var cityHistory  = [];
 
+// Event listener handeling city name submission -----------------------------------------------------------------
 
-// form & history slection 
-var listOfSearchedCities = []
-
-
-// Event listener handeling city name submission 
 $("form").submit(function (event) {
     event.preventDefault()
-    var cityName = $("#searchCity").val().trim()
+    var cityName = $("#searchCity").val().trim();
+    saveCityName();
     if (cityName) {
         returnForcast(cityName)
     } else {
         alert(`${cityName} is not a valid city`)
     }
 })
+
+
+// pulling data from api -----------------------------------------------------------------------------------------
 
 // take submitted city name and push to api that converts it to coordinates 
 function returnForcast(cityName) {
@@ -32,7 +33,8 @@ function returnForcast(cityName) {
             if (response.ok) {
                 response.json().then((data) => {
                     var coordinate = data.city;
-                    // in progress // saveSearches(cityName)
+                    // call save function here instead of on-click in case user searched invalid city name.
+                    saveCityName(cityName)
                     returnWeather(coordinate.coord.lat, coordinate.coord.lon)
                     console.log (coordinate);
                 })
@@ -57,3 +59,31 @@ function returnForcast(cityName) {
     }
     returnCoordinates();
 }
+
+// local storage and history -------------------------------------------------------------------------------------
+
+var cityName = $("#searchCity").val().trim();
+
+// load from local storage -------------------------------------
+var loadCityName = function() {
+    cityHistory = JSON.parse(localStorage.getItem("weatherCities"))
+    if (!cityHistory) {
+        cityHistory = []
+    } else {
+        generateSearchHistory()
+    }
+}
+
+// save to local storage ---------------------------------------
+var saveCityName = function(cityName) {
+    cityHistory.push(cityName)
+    localStorage.setItem("City", JSON.stringify(cityHistory))
+    //savedCityButton()
+}
+
+// create search history ---------------------------------------
+var savedCityButton = function (cityName) {
+
+
+}
+// call load function
