@@ -33,14 +33,18 @@ The following image demonstrates the application functionality:
 ![weather dashboard demo](./Assets/06-server-side-apis-homework-demo.png)
 
 ## Review
+Resources:
+- Moments.js
+- Bootstrap
+- Jquery 
+- Open Weather: One Call API
 
 Links: 
-
 * The URL of the deployed application.
-- https://jaime-gg.github.io/weather-dashboard/ 
+    - https://jaime-gg.github.io/weather-dashboard/ 
 
 * The URL of the GitHub repository. 
-- https://github.com/jaime-gg/weather-dashboard 
+    - https://github.com/jaime-gg/weather-dashboard 
 
 - - -
 © 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
