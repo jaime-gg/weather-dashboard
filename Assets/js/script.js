@@ -46,7 +46,7 @@ function returnForcast(cityName) {
 
     // plug in coordinates to fetch the local weather
     var returnWeather = function(lat, lon) {
-        var weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${APIKey}`
+        var weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`
         var cityName = $("#searchCity").val().trim();
         cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
         fetch(weatherUrl).then(response => {
@@ -56,12 +56,15 @@ function returnForcast(cityName) {
                     console.log(data)
 
                     // data -> current date -----------------------------------------------
+                    // display name
                     $("#currentCityName").html(cityName);
+                    //display date
                     var date = moment().format("MM/DD/YY");
                     $("#currentdate").html(date);
+                    // display weather icon
                     var todayWeatherIncon = data.current.weather[0].icon;
                     $("#weatherIconToday").attr("src", `http://openweathermap.org/img/wn/${todayWeatherIncon}@2x.png`);
-
+                    // display uv index, temp, humidity, and wund speeds
                     $("#UVIndexToday").html(data.current.uvi);
                     $("#tempToday").html(data.current.temp + " \u00B0F");
                     $("#humidityToday").html(data.current.humidity + " %");
@@ -130,13 +133,16 @@ var savedCityButton = function () {
     historyEl.empty()
 
     for (var i = 0; i < cityHistory.length; i++) {
+        // genereate list item
         var listItemEl = $("<li>")
         listItemEl.addClass("mt-2")
         historyEl.append(listItemEl)
+        // generate button with text value of cityHistory
         var buttonHistoryEl = $("<button>")
         buttonHistoryEl.addClass("btn btn-secondary pull-history-button")
         listItemEl.append(buttonHistoryEl)
         buttonHistoryEl.text(cityHistory[i])
+        // add event listener to button to push for data
         buttonHistoryEl.click(function (event) {
             event.preventDefault()
             var cityName = $(this).text();
