@@ -16,6 +16,7 @@ $("form").submit(function (event) {
 })
 
 
+
 // pulling data from api -----------------------------------------------------------------------------------------
 
 // take submitted city name and push to api that converts it to coordinates 
@@ -58,7 +59,8 @@ function returnForcast(cityName) {
                     $("#currentCityName").html(cityName);
                     var date = moment().format("MM/DD/YY");
                     $("#currentdate").html(date);
-                    // $("#weatherIconToday").data.current.weather.icon,
+                    var todayWeatherIncon = data.current.weather[0].icon;
+                    $("#weatherIconToday").attr("src", `http://openweathermap.org/img/wn/${todayWeatherIncon}@2x.png`);
 
                     $("#UVIndexToday").html(data.current.uvi);
                     $("#tempToday").html(data.current.temp + " \u00B0F");
@@ -115,7 +117,9 @@ var saveCityName = function(cityName) {
         cityHistory = [];
         cityHistory.unshift(searchCityName);
     } 
-    cityHistory.push(cityName)
+    //prevent duplicates to be pushed to array 
+    //but push cityName if its an original
+    if (cityHistory.indexOf(cityName) === -1) cityHistory.push(cityName);
     localStorage.setItem("City", JSON.stringify(cityHistory))
     savedCityButton()
 }
@@ -127,9 +131,17 @@ var savedCityButton = function () {
 
     for (var i = 0; i < cityHistory.length; i++) {
         var listItemEl = $("<li>")
-        listItemEl.text(cityHistory[i])
-        listItemEl.addClass("list-group-item mt-1")
+        listItemEl.addClass("mt-2")
         historyEl.append(listItemEl)
+        var buttonHistoryEl = $("<button>")
+        buttonHistoryEl.addClass("btn btn-secondary pull-history-button")
+        listItemEl.append(buttonHistoryEl)
+        buttonHistoryEl.text(cityHistory[i])
+        buttonHistoryEl.click(function (event) {
+            event.preventDefault()
+            var cityName = $(this).text();
+            returnForcast(cityName)
+        })
     }
 }
 
