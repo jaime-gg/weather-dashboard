@@ -13,7 +13,6 @@ $("form").submit(function (event) {
     } else {
         alert(`${cityName} is not a valid city`)
     }
-    saveCityName();
 })
 
 
@@ -48,6 +47,7 @@ function returnForcast(cityName) {
     var returnWeather = function(lat, lon) {
         var weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${APIKey}`
         var cityName = $("#searchCity").val().trim();
+        cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
         fetch(weatherUrl).then(response => {
             // if the data is successfully pullled append to the page
             if (response.ok) {
@@ -73,7 +73,7 @@ function returnForcast(cityName) {
                         $("#Date" + i).html(date);
                         // display weather icon
                         var weatherIncon = data.daily[i].weather[0].icon;
-                        $("#weatherIconDay" + i).attr("src", weatherIncon);
+                        $("#weatherIconDay" + i).attr("src", `http://openweathermap.org/img/wn/${weatherIncon}@2x.png`);
                         // display temperature
                         var temp = data.daily[i].temp.day;
                         $("#tempDay" + i).html(temp);
@@ -100,9 +100,7 @@ var cityName = $("#searchCity").val().trim();
 // load from local storage -------------------------------------
 var loadCityName = function() {
     cityHistory = JSON.parse(localStorage.getItem("City"))
-    if (cityHistory === null) {
-        cityHistory = [];
-    }
+    console.log(cityHistory);
 
     if (!cityHistory) {
         cityHistory = []
@@ -113,7 +111,7 @@ var loadCityName = function() {
 
 // save to local storage ---------------------------------------
 var saveCityName = function(cityName) {
-    if (cityHistory == null) {
+    if (!cityHistory) {
         cityHistory = [];
         cityHistory.unshift(searchCityName);
     } 
